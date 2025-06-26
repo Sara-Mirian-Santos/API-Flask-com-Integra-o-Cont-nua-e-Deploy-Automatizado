@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-mysql-bd
+spec:
+  selector:
+    matchLabels:
+      app: statefulset-mysql-bd
+  serviceName: svc-statefulset-mysql-bd
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: statefulset-mysql-bd
+    spec:
+      containers:
+      - name: statefulset-mysql-bd
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+          name: port-mysql-db
+        env:
+        # - name: MYSQL_ROOT_PASSWORD
+        #   value: "161199Banco@"
+        ## - name: MYSQL_HOST
+        ##   value: "localhost"
+        ## - name: MYSQL_DATABASE
+        ##   value: "catalogo_produtos"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "161199Banco@"
+
+        volumeMounts:
+        - name: volume-pvc
+          mountPath: /var/lib/mysql
+  # volumes:
+  #   - name: volume-pvc
+  #     persistentVolumeClaim:
+  #       claimName: volume-pvc
+  volumeClaimTemplates:
+  - metadata:
+      name: volume-pvc
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

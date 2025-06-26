@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+    mysql-db:
+        container_name: mysql-db
+        image: mysql:8.0
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: 161199Banco@
+        ports:
+            - '3307:3306'
+        # volumes:
+        #     - ./mysql/data:/var/lib/mysql
+
+    api-catalogo:
+        # build: .
+        image: registry/sara.msantos/api-catalogo-flask:latest
+    #     context: .                #por padrão já pega os dados da minha pasta local
+    #     dockerfile: Dockerfile    #por padrão já é definido com dockerfile
+        ports:
+            - '5000:5000'
+        depends_on:
+            - mysql-db

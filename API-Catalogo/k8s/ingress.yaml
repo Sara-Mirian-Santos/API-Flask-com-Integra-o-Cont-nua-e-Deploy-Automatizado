@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myingress
+  labels:
+    name: myingress
+spec:
+  rules:
+  - host: api.catalogo    #principal recurso que diferencia o ingress #pode definir qualquer nome para criar o ingress, ele gera um ip para você poder adicionar nos seu hots
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: service-api-catalogo
+            port: 
+              number: 5000
