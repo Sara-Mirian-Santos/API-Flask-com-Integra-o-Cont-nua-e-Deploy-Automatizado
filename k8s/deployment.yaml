@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-api-catalogo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-api-catalogo
+  template:
+    metadata:
+      labels:
+        app: my-api-catalogo
+    spec:
+      containers:
+      - name: my-api-catalogo
+        image: 99samiris/api-catalogo:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MYSQL_HOST
+          value: "svc-statefulset-mysql-bd"
+        
+        # livenessProbe:
+        #   httpGet:
+        #     path: /health
+        #     port: 5000

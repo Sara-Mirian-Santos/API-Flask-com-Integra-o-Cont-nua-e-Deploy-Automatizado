@@ -1,0 +1,42 @@
+image:
+  repository: "registry/sara.msantos/api-catalogo-flask"
+  tag: "latest" 
+  credentials:
+    username: "sara.msantos@gmail.com"
+    password: "4aS95g0y"
+
+entrypoint: python3 main.py
+
+service:
+  # port: 5000
+  targetPort: 5000
+
+livenessProbe:
+  path: /health
+  port: 5000
+
+readinessProbe:
+  path: /health
+  port: 5000
+
+ingress:  
+  legacyNginx: true
+  
+  tls: false
+
+  certmanager:
+    enabled: false
+    prod: false
+
+  pathType: Prefix
+  
+  host: "api.catalogo"
+
+# Configuração p/ instalar uma instância de banco de dados MySQL em conjunto com a aplicação
+mysql:
+  enabled: true
+  auth:
+    rootPassword: "161199Banco@"
+    database: "catalogo_produtos"
+    username: "sara"
+    password: "161199Banco@"
